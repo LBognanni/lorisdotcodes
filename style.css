@@ -1,0 +1,181 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+/*
+  Reset CSS from https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+
+*,*::after,*::before{box-sizing:border-box}*{margin:0}body{line-height:1.5;-webkit-font-smoothing:antialiased}canvas,img,picture,svg,video{display:block;max-width:100%}button,input,select,textarea{font:inherit}h1,h2,h3,h4,h5,h6,p{overflow-wrap:break-word}p{text-wrap:pretty}h1,h2,h3,h4,h5,h6{text-wrap:balance}#__next,#root{isolation:isolate}
+
+/*
+  Actual CSS
+*/
+
+:root {
+  --border-radius: 1ex;
+  --shadow-size: var(--border-radius);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --spacing: 4rem;
+  --color-hr: #ccc;
+  --color-text: #333;
+  --content-padding: 3ex;
+  --header-grid: 1fr 3fr;
+  --main-padding: 5rem;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --border-radius: 0.5ex;
+    --content-padding: 1ex;
+    --header-grid: 1fr;
+    --main-padding: 2rem;
+  }
+}
+
+html {
+  background: linear-gradient(120deg, #ffcfcf, #7ec7e4);
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(11pt, 3.5vw, 14pt);
+}
+html,
+body {
+  min-height: 100vh;
+  padding: var(--content-padding);
+}
+
+main {
+  margin: 0 auto 0 auto;
+  max-width: 900px;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0em 0em var(--shadow-size) var(--shadow-color);
+  border: 1px solid #f0f0f0;
+  padding: var(--main-padding);
+}
+
+header {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: var(--header-grid);
+  padding-bottom: var(--spacing);
+  border-bottom: 1px solid var(--color-hr);
+  margin-bottom: var(--spacing);
+
+  & * {
+    border: 0px solid red;
+  }
+
+  img {
+    border-radius: 50%;
+    grid-row-start: 1;
+    grid-column: 1;
+    grid-row-end: 4;
+    max-height: 100%;
+    max-width: clamp(100px, 150px, 100%);
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-align: center;
+    color: #333;
+  }
+
+  h1 {
+    text-transform: uppercase;
+    font-size: 200%;
+    letter-spacing: 0.3ex;
+    font-weight: 300;
+
+    &:after {
+      content: "";
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background-color: var(--color-hr);
+      margin: 0.5em auto;
+    }
+  }
+  h2 {
+    font-size: 100%;
+    font-weight: 600;
+    letter-spacing: 0.4ex;
+    opacity: 0.8;
+  }
+  h3 {
+    font-size: 100%;
+    font-weight: 300;
+    letter-spacing: 0.5ex;
+  }
+}
+
+article {
+  color: var(--color-text);
+
+  p {
+    margin-bottom: calc(var(--spacing)/ 3);
+    line-height: 1.7;
+    font-weight: 400;
+  }
+
+  a {
+    color: #000;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+footer {
+  border-top: 1px solid var(--color-hr);
+  padding-top: var(--spacing);
+  margin-top: var(--spacing);
+  text-align: center;
+  font-size: 80%;
+  color: var(--color-text);
+  display: flex;
+  justify-content: center;
+  
+  
+
+  >a {
+
+    --icon-margin: 2.5em;
+    --icon-pos: calc(var(--icon-margin) / 2);
+    --icon-size: 64px;
+
+    width: var(--icon-size);
+    height: var(--icon-size);
+    border: 1px solid;
+    border-radius: 50%;
+    margin: 0 1rem;
+
+    span{display: none;}
+    background-size: calc(100% - var(--icon-margin));
+    background-repeat: no-repeat;
+    background-position: var(--icon-pos) var(--icon-pos);
+    opacity: 0.5;
+    filter: contrast(0);
+    line-height: 0;
+
+    &.link-x {
+      color: #00aaec;
+      background-image: url(twitter.svg);
+    }
+
+    &.link-gh {
+      color: black;
+      background-image: url(github.svg);
+    }
+
+    &.link-in {
+      color: #007ebb;
+      background-image: url(linkedin.svg);
+    }
+
+    &:hover{
+      opacity: 1;
+      filter: none;
+    }
+  }
+}
