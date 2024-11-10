@@ -4,7 +4,56 @@
   Reset CSS from https://www.joshwcomeau.com/css/custom-css-reset/
 */
 
-*,*::after,*::before{box-sizing:border-box}*{margin:0}body{line-height:1.5;-webkit-font-smoothing:antialiased}canvas,img,picture,svg,video{display:block;max-width:100%}button,input,select,textarea{font:inherit}h1,h2,h3,h4,h5,h6,p{overflow-wrap:break-word}p{text-wrap:pretty}h1,h2,h3,h4,h5,h6{text-wrap:balance}#__next,#root{isolation:isolate}
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+canvas,
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  overflow-wrap: break-word;
+}
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+#__next,
+#root {
+  isolation: isolate;
+}
 
 /*
   Actual CSS
@@ -22,7 +71,7 @@
   --main-padding: 5rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 680px) {
   :root {
     --border-radius: 0.5ex;
     --content-padding: 1ex;
@@ -71,6 +120,7 @@ header {
     grid-row-end: 4;
     max-height: 100%;
     max-width: clamp(100px, 150px, 100%);
+    overflow: hidden;
   }
 
   h1,
@@ -112,7 +162,7 @@ article {
   color: var(--color-text);
 
   p {
-    margin-bottom: calc(var(--spacing)/ 3);
+    margin-bottom: calc(var(--spacing) / 3);
     line-height: 1.7;
     font-weight: 400;
   }
@@ -135,11 +185,8 @@ footer {
   color: var(--color-text);
   display: flex;
   justify-content: center;
-  
-  
 
-  >a {
-
+  > a {
     --icon-margin: 2.5em;
     --icon-pos: calc(var(--icon-margin) / 2);
     --icon-size: 64px;
@@ -150,7 +197,9 @@ footer {
     border-radius: 50%;
     margin: 0 1rem;
 
-    span{display: none;}
+    span {
+      display: none;
+    }
     background-size: calc(100% - var(--icon-margin));
     background-repeat: no-repeat;
     background-position: var(--icon-pos) var(--icon-pos);
@@ -173,9 +222,54 @@ footer {
       background-image: url(linkedin.svg);
     }
 
-    &:hover{
+    &:hover {
       opacity: 1;
       filter: none;
     }
+  }
+}
+
+:root {
+  --intensify-size: 3px;
+  --intensify-size-neg: calc(0 - var(--intensify-size));
+}
+
+
+
+@media (min-width: 900px) {
+  a:has(> img) {
+    position: relative;
+    &:hover {
+      &:after,
+      &:before {
+        content: "💥 💥 ";
+        opacity: 0.4;
+        position: absolute;
+        top: 51px;
+        left: 45px;
+      }
+      &:before {
+        transform: flipX(180deg);
+      }
+      animation: intensifies 0.1s infinite;
+    }
+  }
+}
+
+@keyframes intensifies {
+  0% {
+    transform: translate(var(--intensify-size), 0);
+  }
+  25% {
+    transform: translate(var(--intensify-size-neg), 0);
+  }
+  50% {
+    transform: translate(0, var(--intensify-size));
+  }
+  75% {
+    transform: translate(0, var(--intensify-size-neg));
+  }
+  100% {
+    transform: translate(var(--intensify-size), 0);
   }
 }
