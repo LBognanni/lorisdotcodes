@@ -1,0 +1,103 @@
+article {
+  container-type: inline-size;
+}
+#minesweeper {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  aspect-ratio: 1;
+  overflow: hidden;
+
+  label {
+    background-color: #ccc;
+    border: 1px solid #aaa;
+    text-align: center;
+    line-height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    aspect-ratio: 1;
+    font-size: 3rem;
+    padding-top: calc(50% - 0.5ex);
+
+    &:hover {
+      background-color: #ddd;
+    }
+
+    &:has(+ :indeterminate) {
+      background-color: #eee;
+    }
+
+    &:has(+ .has-mine):after {
+      _content: "💣";
+    }
+
+    &:has(+ :checked) {
+      background-color: #fff;
+      &:has(+ .has-mine):after {
+        content: "💥";
+      }
+    }
+
+    &:has(+ :indeterminate):after {
+      content: "🚩";
+    }
+  }
+  input {
+    display: none;
+  }
+
+  #you-lose {
+    --height: 5em;
+
+    position: absolute;
+    text-align: center;
+    height: var(--height);
+    width: 100%;
+    margin-top: calc(50% - calc(var(--height) / 2));
+    background-color: #f00;
+    top: 150%;
+    color: #fff;
+    transition: all 0.5s;
+  }
+
+  #you-win {
+    --height: 5em;
+
+    position: absolute;
+    text-align: center;
+    height: var(--height);
+    width: 100%;
+    top: 150%;
+    margin-top: calc(50% - calc(var(--height) / 2));
+    background-color: #080;
+    color: #fff;
+    transition: all 0.5s;
+  }
+
+  /*
+    Losing condition: any mine is checked
+  */
+  &:has(.has-mine:checked) {
+    #you-lose {
+      top: 0;
+    }
+
+    label:has(+.has-mine:not(:checked)):after {
+      content: "💣";
+    }
+  }
+
+  /*
+  Winning condition
+  */
+  /* no mines are not indeterminate (ie they're all flagged) */
+  &:not(:has(.has-mine:not(:indeterminate))) {
+      /* all non-mine cells are checked */
+      &:not(:has(.empty:not(:checked))) {
+        #you-win {
+          top: 0;
+        }
+    }
+  }
+}
