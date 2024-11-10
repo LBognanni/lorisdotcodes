@@ -12,13 +12,45 @@ article {
   label {
     background-color: #ccc;
     border: 1px solid #aaa;
-    text-align: center;
-    line-height: 40px;
-    font-size: 20px;
     cursor: pointer;
     aspect-ratio: 1;
-    font-size: 3rem;
-    padding-top: calc(50% - 0.5ex);
+    container-type: size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    &:after {
+      font-size: 50cqw;
+    }
+
+    &[data-mines-nearby="0"]:after {
+      color: #666;
+    }
+    &[data-mines-nearby="1"]:after {
+      color: rgb(0, 132, 255);
+    }
+    &[data-mines-nearby="2"]:after {
+      color: rgb(0, 68, 255);
+    }
+    &[data-mines-nearby="3"]:after {
+      color: rgb(76, 0, 255);
+    }
+    &[data-mines-nearby="4"]:after {
+      color: rgb(153, 0, 255);
+    }
+    &[data-mines-nearby="5"]:after {
+      color: rgb(225, 0, 255);
+    }
+    &[data-mines-nearby="6"]:after {
+      color: rgb(255, 0, 149);
+    }
+    &[data-mines-nearby="7"]:after {
+      color: rgb(255, 0, 0);
+    }
+    &[data-mines-nearby="8"]:after {
+      color: maroon;
+    }
 
     &:hover {
       background-color: #ddd;
@@ -37,6 +69,9 @@ article {
       &:has(+ .has-mine):after {
         content: "💥";
       }
+      &:has(+ .empty):after {
+        content: attr(data-mines-nearby);
+      }
     }
 
     &:has(+ :indeterminate):after {
@@ -47,32 +82,30 @@ article {
     display: none;
   }
 
-  #you-lose {
-    --height: 5em;
+  #you-win, #you-lose {
+    --height: 8em;
 
     position: absolute;
     text-align: center;
     height: var(--height);
-    width: 100%;
+    width: calc(100% - 3ex);
+    left: 1.5ex;
+    box-shadow: 0 0 1ex rgba(0,0,0,0.5);
     margin-top: calc(50% - calc(var(--height) / 2));
-    background-color: #f00;
     top: 150%;
     color: #fff;
     transition: all 0.5s;
+    z-index: 1;
+  }
+
+  #you-lose {
+    --height: 8em;
+    background-color: #f00;
   }
 
   #you-win {
     --height: 5em;
-
-    position: absolute;
-    text-align: center;
-    height: var(--height);
-    width: 100%;
-    top: 150%;
-    margin-top: calc(50% - calc(var(--height) / 2));
     background-color: #080;
-    color: #fff;
-    transition: all 0.5s;
   }
 
   /*
@@ -83,7 +116,8 @@ article {
       top: 0;
     }
 
-    label:has(+.has-mine:not(:checked)):after {
+    /* Reveal the minefield when you lose */
+    label:has(+ .has-mine:not(:checked)):after {
       content: "💣";
     }
   }
@@ -93,11 +127,11 @@ article {
   */
   /* no mines are not indeterminate (ie they're all flagged) */
   &:not(:has(.has-mine:not(:indeterminate))) {
-      /* all non-mine cells are checked */
-      &:not(:has(.empty:not(:checked))) {
-        #you-win {
-          top: 0;
-        }
+    /* & all non-mine cells are checked */
+    &:not(:has(.empty:not(:checked))) {
+      #you-win {
+        top: 0;
+      }
     }
   }
 }

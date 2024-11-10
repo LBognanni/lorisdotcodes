@@ -15,7 +15,9 @@
   <body>
     <main>
       <header>
-        <img class="img-circle" src="profile.jpg" alt="My face" />
+        <a href="index.html">
+          <img class="img-circle" src="profile.jpg" alt="My face" />
+        </a>
         <div>
           <h1>Loris Bognanni</h1>
           <h2>Senior Software Engineer</h2>
@@ -25,23 +27,14 @@
 
       <article>
 
-        <h3>MineSweeper</h3>
+        <h3>Mostly CSS MineSweeper</h3>
         <p>Click once to flag, twice to dig</p>
         <div id="minesweeper">
-
-            <label></label><input type="checkbox" class="has-mine" />
-            <label></label><input type="checkbox" class="empty" />
-            <label></label><input type="checkbox" class="empty" />
-            <label></label><input type="checkbox" class="empty" />
-            <label></label><input type="checkbox" class="empty" />
-            <label></label><input type="checkbox" class="empty" />
-            <label></label><input type="checkbox" class="empty" />
-            <label></label><input type="checkbox" class="has-mine" />
-            <label></label><input type="checkbox" class="empty" />
 
             <div id="you-lose">
                 <h2>💥 Game Over</h2>
                 <p>You stepped on a mine 🤕</p>
+                <button onclick="makeMinfield()">🔄 new game</button>
             </div>
 
             <div id="you-win">
@@ -49,11 +42,23 @@
                 <p>You successfully cleared the minefield 🎊</p>
             </div>
         </div>
+        <br />
+        <p>
+            Can minesweeper be implemented purely in CSS?
+            Yes it can! almost! 😅
+        </p>
+        <p>
+          Some javascript is needed to generate the minefield, 
+          and to make the checkboxes 3-state (checked, unchecked, indeterminate) as you click,
+          but the game logic is all <a href="sweep.css">in CSS</a> 🤯!
+        </p>
 
       </article>
 
 
       <script>
+
+        document.addEventListener("DOMContentLoaded", makeMinfield);
 
         document.getElementById("minesweeper").addEventListener("click", function(event){
             var target = event.target;
@@ -72,6 +77,49 @@
                     checkbox.checked = false;
                 }
             });
+        
+
+            function makeMinfield(){
+
+                const existingItems = document.querySelectorAll("#minesweeper > label, #minesweeper > input");
+                existingItems.forEach(item => item.remove());
+
+                const minefieldSize = 6;
+                const numberOfMines = 7;
+                const mines = new Array(numberOfMines);
+                for(let i = 0; i < numberOfMines; i++)
+                {
+                    let x = Math.floor(Math.random() * minefieldSize);
+                    let y = Math.floor(Math.random() * minefieldSize);
+                    
+                    while(mines.some(([mx, my]) => mx === x && my === y)){
+                        x = Math.floor(Math.random() * minefieldSize);
+                        y = Math.floor(Math.random() * minefieldSize);
+                    }
+                    mines[i] = [x, y];
+                }
+
+                for(let x = 0; x < minefieldSize; x++){
+                    for(let y = 0; y < minefieldSize; y++){
+                        const label = document.createElement("label");
+                        const input = document.createElement("input");
+                        input.type = "checkbox";
+                        if (mines.some(([mx, my]) => mx === x && my === y)){
+                            input.className = "has-mine";
+                        }
+                        else{
+                            input.className = "empty";
+                            const minesAround = mines.filter(([mx, my]) => Math.abs(mx - x) <= 1 && Math.abs(my - y) <= 1).length;
+                            label.dataset.minesNearby = minesAround;
+                        }
+                        document.getElementById("minesweeper").appendChild(label);
+                        document.getElementById("minesweeper").appendChild(input);
+                    }
+                }
+
+                document.getElementById("minesweeper").style.gridTemplateColumns = `repeat(${minefieldSize}, 1fr)`;
+                document.getElementById("minesweeper").style.gridTemplateRows = `repeat(${minefieldSize}, 1fr)`;
+            }
 
       </script>
 
