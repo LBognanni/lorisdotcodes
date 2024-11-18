@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("checkbox.css");
 
 /*
   Reset CSS from https://www.joshwcomeau.com/css/custom-css-reset/
@@ -69,6 +70,12 @@ h6 {
   --content-padding: 3ex;
   --header-grid: 1fr 3fr;
   --main-padding: 5rem;
+
+  --background: linear-gradient(120deg, #ffcfcf, #7ec7e4);
+  --main-background: white;
+  --main-border: #f0f0f0;
+  --color-link: black;
+  --inner-shadow-color: #ddd;
 }
 
 @media (max-width: 680px) {
@@ -81,7 +88,7 @@ h6 {
 }
 
 html {
-  background: linear-gradient(120deg, #ffcfcf, #7ec7e4);
+  background: var(--background);
   font-family: "Montserrat", sans-serif;
   font-size: clamp(11pt, 3.5vw, 14pt);
 }
@@ -91,14 +98,22 @@ body {
   padding: var(--content-padding);
 }
 
+html:has(body.allow-transitions),
+body.allow-transitions,
+body.allow-transitions main,
+body.allow-transitions article {
+  transition: background .5s, color 1s;
+}
+
 main {
   margin: 0 auto 0 auto;
   max-width: 900px;
-  background-color: white;
+  background-color: var(--main-background);
   border-radius: var(--border-radius);
   box-shadow: 0em 0em var(--shadow-size) var(--shadow-color);
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--main-border);
   padding: var(--main-padding);
+  position: relative;
 }
 
 header {
@@ -108,10 +123,7 @@ header {
   padding-bottom: var(--spacing);
   border-bottom: 1px solid var(--color-hr);
   margin-bottom: var(--spacing);
-
-  & * {
-    border: 0px solid red;
-  }
+  text-shadow: 0 0 1ex rgba(0, 0, 0, 0.15);
 
   img {
     border-radius: 50%;
@@ -121,13 +133,16 @@ header {
     max-height: 100%;
     max-width: clamp(100px, 150px, 100%);
     overflow: hidden;
+    padding: .5ex;
+    background-color: var(--main-background);
+    box-shadow: 0 0 3ex var(--inner-shadow-color);
   }
 
   h1,
   h2,
   h3 {
     text-align: center;
-    color: #333;
+    color: var(--color-text);
   }
 
   h1 {
@@ -160,15 +175,18 @@ header {
 
 article {
   color: var(--color-text);
-
+  text-align: justify;
+  
   p {
     margin-bottom: calc(var(--spacing) / 3);
     line-height: 1.7;
     font-weight: 400;
+    hyphens: auto;
+    text-shadow: 0 0 0.2ex rgba(0, 0, 0, 0.1);
   }
 
   a {
-    color: #000;
+    color: var(--color-link);
 
     &:hover {
       text-decoration: none;
@@ -234,11 +252,8 @@ footer {
   --intensify-size-neg: calc(0 - var(--intensify-size));
 }
 
-
-
 @media (min-width: 900px) {
   a:has(> img) {
-    position: relative;
     &:hover {
       &:after,
       &:before {
@@ -273,3 +288,58 @@ footer {
     transform: translate(var(--intensify-size), 0);
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-hr: #555;
+    --color-text: #ddd;
+    --shadow-color: rgba(0, 0, 0, 0.8);
+    --color-link: white;
+    --background: linear-gradient(120deg, #2c3e50, #4ca1af);
+    --main-background: #333;
+    --main-border: #444;
+    --inner-shadow-color: #555;
+  }
+
+  footer {
+    a:hover {
+      background-color: #aaaaaa;
+    }
+  }
+}
+
+html:has(body.dark-mode) {
+  --color-hr: #555;
+  --color-text: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.8);
+  --color-link: white;
+  --background: linear-gradient(120deg, #2c3e50, #4ca1af);
+  --main-background: #333;
+  --main-border: #444;
+  --inner-shadow-color: #555;
+
+  footer {
+    a:hover {
+      background-color: #aaaaaa;
+    }
+  }
+}
+
+html:has(body.light-mode) {
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --color-hr: #ccc;
+  --color-text: #333;
+
+  --background: linear-gradient(120deg, #ffcfcf, #7ec7e4);
+  --main-background: white;
+  --main-border: #f0f0f0;
+  --color-link: black;
+  --inner-shadow-color: #ddd;
+
+  footer {
+    a:hover {
+      background-color: #fff;
+    }
+  }
+}
+

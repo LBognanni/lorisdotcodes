@@ -30,6 +30,7 @@
     <meta name="twitter:image:src" content="https://loris.codes/preview.png" />
 
 
+    <meta name="color-scheme" content="light dark">
     <title>Loris Bognanni</title>
   </head>
   <body>
@@ -40,6 +41,7 @@
       you can view it on GitHub: https://github.com/LBognanni/lorisdotcodes
     -->
     <main>
+      <label title="Toggle Dark Mode" class="toggleDarkMode"><span></span><input id="chkToggleDarkMode" onchange="toggleDarkMode(this)" type="checkbox" /></label>
       <header>
         <a href="sweep.html">
           <img class="img-circle" src="profile.jpg" alt="My face" />
@@ -52,7 +54,7 @@
       </header>
 
       <article>
-        <p>👋Hi, I'm Loris!</p>
+        <p>👋 Hi, I'm Loris!</p>
         <p>
           🚀 I'm currently making regulatory compliance awesome at <a href="https://fundapps.co">FundApps</a>,
           where I spend lots of time thinking about scalable architecture,
@@ -75,6 +77,8 @@
         <a title="GitHub" class="link-gh" href="https://github.com/LBognanni"><span>🐈‍⬛ GitHub</span></a>
         <a title="Linkedin" class="link-in" href="https://www.linkedin.com/in/loris-bognanni/"><span>Linkedin</span></a>
       </footer>
+
+      <script src="darkmode.js"></script>
     </main>
   </body>
 </html>

@@ -10,10 +10,12 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="sweep.css" />
 
+    <meta name="color-scheme" content="light dark">
     <title>Loris Bognanni</title>
   </head>
   <body>
     <main>
+      <label title="Toggle Dark Mode" class="toggleDarkMode"><span></span><input id="chkToggleDarkMode" onchange="toggleDarkMode(this)" type="checkbox" /></label>
       <header>
         <a href="index.html">
           <img class="img-circle" src="profile.jpg" alt="My face" />
@@ -128,6 +130,7 @@
         <a title="GitHub" class="link-gh" href="https://github.com/LBognanni"><span>🐈‍⬛ GitHub</span></a>
         <a title="Linkedin" class="link-in" href="https://www.linkedin.com/in/loris-bognanni/"><span>Linkedin</span></a>
       </footer>
+      <script src="darkmode.js"></script>
     </main>
   </body>
 </html>

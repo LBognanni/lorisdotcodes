@@ -1,0 +1,89 @@
+body.allow-transitions label.toggleDarkMode {
+  span {
+    transform: all 0.2s ease-in;
+  }
+  &:before,
+  &:after {
+    transition: all 1s ease-in-out;
+  }
+}
+
+label.toggleDarkMode:has(input[type="checkbox"]) {
+  --size: 2em;
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  background-color: rgb(8, 8, 202);
+  box-shadow: 0 0 1ex rgba(0, 0, 0, 0.2);
+  border: 2px solid lightgray;
+  border-radius: 20%;
+  overflow: hidden;
+  container-type: size;
+  user-select: none;
+  cursor: pointer;
+  position: absolute;
+  right: 2ex;
+  top: 2ex;
+
+  span {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>⛰️</text></svg>");
+    background-position: left 0 top calc(var(--size) * 0.1);
+    background-repeat: no-repeat;
+    z-index: 1;
+    filter: brightness(0.8);
+  }
+
+  input {
+    display: none;
+  }
+
+  &:before,
+  &:after {
+    text-align: center;
+    padding-top: 10cqh;
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    text-align: right;
+  }
+
+  &:before {
+    font-size: 30cqw;
+    content: "🌜️";
+    background: linear-gradient(rgba(11, 4, 107, 0), rgba(39, 0, 75, 1));
+    top: 0;
+    color: rgba(0, 0, 0, 0.9);
+    opacity: 1;
+  }
+  &:after {
+    font-size: 40cqw;
+    content: "🌞";
+    background: linear-gradient(rgba(150, 230, 255, 0), rgba(150, 230, 255, 1));
+    top: 0;
+    top: 60%;
+    opacity: 0;
+  }
+
+  &:has(input:checked) {
+    background-color: rgb(95, 124, 255);
+    span {
+      filter: brightness(1);
+    }
+
+    &:before {
+      top: 100%;
+      opacity: 0;
+    }
+    &:after {
+      top: 0;
+      opacity: 1;
+    }
+    span {
+    }
+  }
+}
