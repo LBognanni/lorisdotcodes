@@ -8,10 +8,13 @@ article {
   grid-template-rows: repeat(3, 1fr);
   aspect-ratio: 1;
   overflow: hidden;
+  border: 2px solid #aaa;
+  box-shadow: 0 0 3ex rgba(0, 0, 0, 0.2);
+  align-items: center;
 
   label {
     background-color: #ccc;
-    border: 1px solid #aaa;
+    outline: 1px solid #aaa;
     cursor: pointer;
     aspect-ratio: 1;
     container-type: size;
@@ -56,81 +59,107 @@ article {
       background-color: #ddd;
     }
 
-    &:has(+ :indeterminate) {
-      background-color: #eee;
+    &:has(input:indeterminate) {
+      background-color: #ddd;
+      &:after {
+        content: " ";
+      }
     }
 
-    &:has(+ .has-mine):after {
+    &:has(input.has-mine):after {
       _content: "💣";
     }
 
-    &:has(+ :checked) {
+    &:not(:has(input:indeterminate)) {
       background-color: #fff;
-      &:has(+ .has-mine):after {
-        content: "💥";
-      }
-      &:has(+ .empty):after {
-        content: attr(data-mines-nearby);
+      &:after {
+        content: "🚩";
       }
     }
 
-    &:has(+ :indeterminate):after {
-      content: "🚩";
+    &:not(:has(input:checked, input:indeterminate)) {
+      background-color: #fff;
+      &:has(input.has-mine):after {
+        content: "💥";
+      }
+      &:has(input.empty):after {
+        content: attr(data-mines-nearby);
+      }
     }
   }
   input {
     display: none;
   }
 
-  #you-win, #you-lose {
-    --height: 8em;
-
+  #you-win,
+  #you-lose {
     position: absolute;
     text-align: center;
-    height: var(--height);
     width: calc(100% - 3ex);
     left: 1.5ex;
-    box-shadow: 0 0 1ex rgba(0,0,0,0.5);
-    margin-top: calc(50% - calc(var(--height) / 2));
-    top: 150%;
+    box-shadow: 0 0 1ex rgba(0, 0, 0, 0.5);
     color: #fff;
+    padding-bottom: 1ex;
     transition: all 0.5s;
+    transform: translateY(150cqh);
+
     z-index: 1;
+    p,
+    h2 {
+      margin: 0.3ex;
+    }
+    button {
+      background-color: rgba(255, 255, 255, 0.75);
+      border-radius: 1ex;
+      padding: 0.5ex 1ex;
+      border: none;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 0.2ex 0.2ex 0.5ex rgba(0, 0, 0, 0.5);
+      &:active {
+        box-shadow: 0.1ex 0.1ex 0.5ex rgba(0, 0, 0, 0.5);
+        transform: translate(0.1ex, 0.1ex);
+      }
+    }
   }
 
   #you-lose {
-    --height: 8em;
     background-color: #f00;
   }
 
   #you-win {
-    --height: 5em;
     background-color: #080;
   }
 
   /*
-    Losing condition: any mine is checked
+    Losing condition: any mine unchecked and not indeterminate
   */
-  &:has(.has-mine:checked) {
+  &:has(.has-mine:not(:checked):not(:indeterminate)) {
     #you-lose {
-      top: 0;
+      transform: translateY(0);
     }
 
     /* Reveal the minefield when you lose */
-    label:has(+ .has-mine:not(:checked)):after {
+    label:has(.has-mine:indeterminate):after {
       content: "💣";
     }
   }
-
   /*
   Winning condition
   */
-  /* no mines are not indeterminate (ie they're all flagged) */
-  &:not(:has(.has-mine:not(:indeterminate))) {
-    /* & all non-mine cells are checked */
-    &:not(:has(.empty:not(:checked))) {
-      #you-win {
-        top: 0;
+  /* no flags on empties */
+  &:has(input) {
+    &:not(:has(.empty:checked)) {
+      /* no mines are unchecked */
+      &:not(:has(.has-mine:not(:checked))) {
+        /*ie - all mines are flagged*/
+        #you-win {
+          transform: translateY(0);
+        }
+        /* reveal any numbered space */
+        label:has(input.empty):after {
+          content: attr(data-mines-nearby);
+        }
       }
     }
   }
