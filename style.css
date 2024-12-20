@@ -240,6 +240,11 @@ footer {
       background-image: url(linkedin.svg);
     }
 
+    &.link-bsk {
+      color: #1185fe;
+      background-image: url(bluesky.svg);
+    }
+
     &:hover {
       opacity: 1;
       filter: none;
