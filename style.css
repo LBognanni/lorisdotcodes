@@ -192,6 +192,24 @@ article {
       text-decoration: none;
     }
   }
+  h4 {
+    margin: 4ex 0 2ex 0;
+  }
+  ul {
+    padding-left: 1.6em;
+    list-style-type: none;
+    text-align: left;
+    li {
+      margin-bottom: 0.5em;
+    }
+    li:first-letter {
+      margin-left: -1.6em;
+    }
+    a {
+      font-weight: bold;
+      opacity: .8;
+    }
+  }
 }
 
 footer {
